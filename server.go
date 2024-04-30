@@ -17,8 +17,9 @@ func main() {
 	})
 
 	person := e.Group("/person")
+	person.Use(middlewareLogPersons)
 	person.POST("", create)
-	person.GET("/:id", middlewareLogPersons(get))
+	person.GET("/:id", get)
 	person.PUT("/:id", updated)
 	person.DELETE("/:id", delete)
 
