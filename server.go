@@ -16,10 +16,11 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	e.POST("/person/create", create)
-	e.GET("/person/get", get)
-	e.PUT("/person/update", updated)
-	e.DELETE("/person/delete", delete)
+	person := e.Group("/person")
+	person.POST("", create)
+	person.GET("/:id", get)
+	person.PUT("/:id", updated)
+	person.DELETE("/:id", delete)
 
 	e.Start(":8082")
 }
@@ -29,13 +30,16 @@ func create(c echo.Context) error {
 }
 
 func updated(c echo.Context) error {
-	return c.String(http.StatusOK, "updated")
+	id := c.Param("id")
+	return c.String(http.StatusOK, "updated "+id)
 }
 
 func delete(c echo.Context) error {
-	return c.String(http.StatusOK, "deleted")
+	id := c.Param("id")
+	return c.String(http.StatusOK, "deleted "+id)
 }
 
 func get(c echo.Context) error {
-	return c.String(http.StatusOK, "get")
+	id := c.Param("id")
+	return c.String(http.StatusOK, "get "+id)
 }
